@@ -1,0 +1,496 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --vh: 1vh;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100); /* Fallback with JS calculation */
+    height: 100svh; /* Small viewport height - excludes keyboard */
+    overflow: hidden;
+    -webkit-user-select: none;
+    user-select: none;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* App container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100svh; /* Small viewport height - stable with keyboard */
+    max-width: 428px;
+    margin: 0 auto;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(28, 28, 30, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid rgba(84, 84, 88, 0.6);
+    min-height: 88px;
+    padding-top: max(10px, env(safe-area-inset-top));
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 428px;
+    z-index: 1000;
+}
+
+.settings-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #007AFF;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.settings-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 0 16px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-bottom: 4px;
+}
+
+.contact-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+}
+
+.faq-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #007AFF;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.faq-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Messages container */
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    background: #000;
+    padding: 0 16px;
+    padding-top: 108px; /* Account for fixed header */
+    padding-bottom: max(120px, calc(100px + env(safe-area-inset-bottom))); /* Account for iOS safe area */
+    -webkit-overflow-scrolling: touch;
+    height: calc(100svh - 200px);
+    max-height: calc(100svh - 200px);
+    overscroll-behavior: contain;
+}
+
+.messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 20px;
+}
+
+/* Message bubbles */
+.message {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 16px;
+    line-height: 1.3;
+    word-wrap: break-word;
+    animation: messageAppear 0.3s ease-out;
+    position: relative;
+}
+
+.message.sent {
+    background: #007AFF;
+    color: #fff;
+    align-self: flex-end;
+    margin-left: auto;
+    border-bottom-right-radius: 6px;
+}
+
+.message.received {
+    background: rgba(118, 118, 128, 0.24);
+    color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 6px;
+}
+
+.message-time {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
+    text-align: right;
+}
+
+.message.received .message-time {
+    text-align: left;
+}
+
+/* Input container */
+.input-container {
+    padding: 12px 16px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    background: rgba(28, 28, 30, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 0.5px solid rgba(84, 84, 88, 0.6);
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 428px;
+    z-index: 1001;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background: rgba(118, 118, 128, 0.24);
+    border-radius: 20px;
+    padding: 12px 16px;
+    gap: 12px;
+    min-height: 44px;
+}
+
+.message-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    font-family: inherit;
+    min-height: 24px;
+    line-height: 1.4;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.message-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.send-btn {
+    background: #007AFF;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.send-btn.active {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.send-btn:hover {
+    background: #0056CC;
+}
+
+.send-btn:active {
+    transform: scale(0.95);
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: rgba(28, 28, 30, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 0.5px solid rgba(84, 84, 88, 0.6);
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    background: rgba(118, 118, 128, 0.24);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    transition: background-color 0.2s;
+}
+
+.form-group input:focus {
+    background: rgba(118, 118, 128, 0.4);
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.form-group input[type="file"] {
+    background: rgba(118, 118, 128, 0.24);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    transition: background-color 0.2s;
+    width: 100%;
+}
+
+.form-group input[type="file"]:focus {
+    background: rgba(118, 118, 128, 0.4);
+}
+
+.upload-preview {
+    margin-top: 12px;
+    text-align: center;
+}
+
+/* FAQ Styles */
+.faq-content {
+    max-height: 60vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.faq-item {
+    margin-bottom: 24px;
+}
+
+.faq-item:last-child {
+    margin-bottom: 0;
+}
+
+.faq-item h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.faq-item p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.clear-btn, .save-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.clear-btn {
+    background: rgba(255, 59, 48, 0.2);
+    color: #FF3B30;
+}
+
+.clear-btn:hover {
+    background: rgba(255, 59, 48, 0.3);
+}
+
+.save-btn {
+    background: #007AFF;
+    color: #fff;
+}
+
+.save-btn:hover {
+    background: #0056CC;
+}
+
+/* Animations */
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Scrollbar styling */
+.messages-container::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Dark mode safe area adjustments */
+@supports (padding: max(0px)) {
+    .header {
+        padding-top: max(10px, env(safe-area-inset-top));
+    }
+    
+    .input-container {
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+}
+
+/* Responsive design */
+@media (max-width: 428px) {
+    .app-container {
+        max-width: 100%;
+    }
+}
+
+/* Touch improvements */
+@media (hover: none) and (pointer: coarse) {
+    .settings-btn:hover,
+    .send-btn:hover,
+    .close-btn:hover,
+    .clear-btn:hover,
+    .save-btn:hover {
+        background: initial;
+    }
+    
+    .settings-btn:active {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .send-btn:active,
+    .save-btn:active {
+        background: #0056CC;
+    }
+    
+    .clear-btn:active {
+        background: rgba(255, 59, 48, 0.3);
+    }
+}

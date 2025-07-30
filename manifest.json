@@ -1,0 +1,51 @@
+{
+  "name": "disparu",
+  "short_name": "disparu",
+  "version": "1.1",
+  "description": "Send messages to someone who is no longer around",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "disparu.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "disparu.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "disparu.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "shortcuts": [
+    {
+      "name": "Send Message",
+      "short_name": "Message",
+      "description": "Send a new message",
+      "url": "/",
+      "icons": [
+        {
+          "src": "disparu.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

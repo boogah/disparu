@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>disparu</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Send messages to someone who is no longer around">
+    <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="disparu">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-config" content="browserconfig.xml">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="disparu.png">
+    <link rel="apple-touch-icon" href="disparu.png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <button class="settings-btn" id="settingsBtn">⚙️</button>
+            <div class="contact-info">
+                <img class="profile-pic" id="profilePic" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNEQ0RDREMiLz4KPHN2ZyB4PSIxMCIgeT0iMTAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzEzLjEgMiAxNCAyLjkgMTQgNEMxNCA1LjEgMTMuMSA2IDEyIDZDMTAuOSA2IDEwIDUuMSAxMCA0QzEwIDIuOSAxMC45IDIgMTIgMlpNMjEgOVYyMkgzVjlDMyA4LjQ1IDMuNDUgOCA0IDhIMjBDMjAuNTUgOCAyMSA4LjQ1IDIxIDlaIi8+Cjwvc3ZnPgo8L3N2Zz4K" alt="Profile">
+                <span class="contact-name" id="contactName">Someone Great</span>
+            </div>
+            <button class="faq-btn" id="faqBtn">?</button>
+        </header>
+        
+        <div class="messages-container" id="messagesContainer">
+            <div class="messages-list" id="messagesList">
+            </div>
+        </div>
+        
+        <div class="input-container">
+            <div class="input-wrapper">
+                <input type="text" class="message-input" id="messageInput" placeholder="Message" maxlength="1000" autocomplete="off" autocorrect="off" spellcheck="false">
+                <button class="send-btn" id="sendBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M2.01 21L23 12 2.01 3 2 10L17 12 2 14L2.01 21Z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-btn" id="closeBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipientName">Recipient Name:</label>
+                    <input type="text" id="recipientName" maxlength="50" placeholder="Someone Great">
+                </div>
+                <div class="form-group">
+                    <label for="messageLimit">Message Limit (10-50):</label>
+                    <input type="number" id="messageLimit" min="10" max="50" value="10">
+                </div>
+                <div class="form-group">
+                    <label for="profilePicture">Profile Picture URL:</label>
+                    <input type="url" id="profilePicture" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label for="profilePictureFile">Or upload from camera roll:</label>
+                    <input type="file" id="profilePictureFile" accept="image/*">
+                    <div class="upload-preview" id="uploadPreview" style="display: none;">
+                        <img id="previewImage" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-top: 8px;">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="clear-btn" id="clearMessages">Clear All Messages</button>
+                    <button class="save-btn" id="saveSettings">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div class="modal-overlay" id="faqModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>About disparu</h2>
+                <button class="close-btn" id="faqCloseBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="faq-content">
+                    <div class="faq-item">
+                        <h3>Why does this exist?</h3>
+                        <p>I made this on what should've been my friend Jeremy Kitchen's 43rd birthday. He passed away back in March, and someone took over his phone number. I missed being able to text him.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Will anyone respond?</h3>
+                        <p>Nobody responds. There's no chatbot here. Never will be. Shouting into a void feels a little weird, but it's better than never saying anything to the person you care about ever again.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>Is this private?</h3>
+                        <p>The messages don't leave your device. Say what's on your heart and it'll stay between you and your phone.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3>What happens to old messages?</h3>
+                        <p>Messages in the scrollback are deleted after a certain number have been sent. The default is 10. You can bump it out to 50, but that's it. Everything is ephemeral.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

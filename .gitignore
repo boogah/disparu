@@ -1,0 +1,11 @@
+# Dependencies
+/node_modules
+/dist
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+*.swp
+*.swo
